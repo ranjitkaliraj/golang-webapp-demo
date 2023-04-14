@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package go_test_crm_service;
+
+option go_package = "cmd/grpc";
+
+
+message Contact {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+  string phone = 5;
+  Address address = 6;
+}
+
+message Address {
+  string street = 1;
+  string city = 2;
+  string state = 3;
+  string zip = 4;
+}
+
+service ContactService {
+  rpc CreateContact(Contact) returns (ContactResponse);
+  rpc GetContact(ContactId) returns (ContactResponse);
+  rpc UpdateContact(Contact) returns (ContactResponse);
+  rpc DeleteContact(ContactId) returns (Empty);
+  rpc ListContacts(Empty) returns (ContactList);
+}
+
+message ContactId {
+  string id = 1;
+}
+
+message ContactResponse {
+  Contact contact = 1;
+  string error_message = 2;
+}
+
+message ContactList {
+  repeated Contact contacts = 1;
+}
+
+message Empty {}
