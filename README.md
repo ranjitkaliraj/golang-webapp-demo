@@ -8,3 +8,6 @@
 - HTTP - ```localhost:8080```
 
 
+
+Note: MongoDB Server is required running on default port ```mongodb://localhost:27017```
+
