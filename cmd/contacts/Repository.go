@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -16,14 +17,22 @@ type Repository struct {
 }
 
 func NewContactRepository() *Repository {
+	mongoURL := os.Getenv("MONGO_DB_URL")
+	mongoDatabase := os.Getenv("MONGO_DB_NAME")
+	if mongoURL == "" {
+		mongoURL = "mongodb://localhost:27017"
+	}
+	if mongoDatabase == "" {
+		mongoDatabase = "test"
+	}
 	// Set up MongoDB connection
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+	clientOptions := options.Client().ApplyURI(mongoURL)
 	client, err := mongo.Connect(context.Background(), clientOptions)
 	if err != nil {
 		log.Fatalf("Failed to connect to MongoDB: %v", err)
 	}
 	//defer client.Disconnect(context.Background())
-	db := client.Database("test")
+	db := client.Database(mongoDatabase)
 	return &Repository{collection: db.Collection("contacts")}
 }
 

@@ -93,3 +93,19 @@ Sample data:
         "zip" : "900032"
     }
 }
+
+
+
+// Deploy to server. 
+cd to cmd
+go build cmd/main.go -o app-name
+
+For cross architecture:
+env GOOS=linux GOARCH=amd64 go build -o demo_go_crm_server
+https://blog.devgenius.io/how-to-handle-cannot-execute-binary-file-exec-format-error-when-running-golang-executable-b5b77110b820
+
+
+
+Enable Env read:
+go mod init goenv
+https://towardsdatascience.com/use-environment-variable-in-your-next-golang-project-39e17c3aaa66
