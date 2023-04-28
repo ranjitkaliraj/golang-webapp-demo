@@ -1,0 +1,24 @@
+package main
+type Config interface {
+	GetRepositoryConfig() RepositoryConfig
+	GetCommandConfig() CommandConfig
+	GetQueryConfig() QueryConfig
+	GetEventConfig() EventConfig
+}
+
+struct RepositoryConfig {
+	// configuration for repository code generation.
+	entityInfo: RepoEntity
+}
+
+struct CommandConfig {
+	// configuration for commands code generation.
+}
+
+struct QueryConfig {
+	// configuration for queries code generation.
+}
+
+struct EventConfig {
+	// configuration for events code generation.
+}
