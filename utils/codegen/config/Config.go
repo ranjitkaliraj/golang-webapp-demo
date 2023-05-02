@@ -1,4 +1,5 @@
 package main
+
 type Config interface {
 	GetRepositoryConfig() RepositoryConfig
 	GetCommandConfig() CommandConfig
@@ -13,10 +14,13 @@ struct RepositoryConfig {
 
 struct CommandConfig {
 	// configuration for commands code generation.
+	entity: string, 
+	cmdToEntityMapping: string
 }
 
 struct QueryConfig {
 	// configuration for queries code generation.
+	entity: string, 
 }
 
 struct EventConfig {

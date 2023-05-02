@@ -26,10 +26,18 @@ func process(config Configurable) {
 
 func generateCommandsCode(config CommandsConfig) {
 	// code generating commands, command handler etc.
+	entity := config.entity
+	fileName := config.fileName
+	tmpl, err := template.New("commandHandler").Parse(CommandHandlerTemplate.template)
+	writeToFile(tmpl, err, fileName, entity)
 }
 
 func generateQueryCode(config QueryConfig) {
 	// code generating queries, query handler etc.
+	entity := config.entity
+	fileName := config.fileName
+	tmpl, err := template.New("queryHandler").Parse(QueryHandlerTemplate.template)
+	writeToFile(tmpl, err, fileName, entity)
 }
 
 func generateEventsCode(config EventsConfig) {
@@ -41,6 +49,10 @@ func generateRepositoryCode(config RepositoryConfig) {
 	entity := config.entity
 	fileName := config.fileName
 	tmpl, err := template.New("repository").Parse(RepositoryTemplate.repoTemplate)
+	writeToFile(tmpl, err, fileName, entity)
+}
+
+func writeToFile(tmpl *template.Template, err error, fileName string, entity string) {
 	if err != nil {
 		panic(err)
 	}

@@ -1,0 +1,30 @@
+package main
+
+template := `
+package handlers
+
+import (
+	"context"
+
+	"github.com/google/uuid"
+)
+
+type {{.Entity}}QueryHandler struct {
+	repo {{.Entity}}Repository
+}
+
+func New{{.Entity}}QueryHandler(repo {{.Entity}}Repository) *{{.Entity}}QueryHandler {
+	return &{{.Entity}}QueryHandler{
+		repo: repo,
+	}
+}
+
+func (h *{{.Entity}}QueryHandler) HandleGetQuery(ctx context.Context, q *Get{{.Entity}}Query) (*{{.Entity}}, error) {
+	return h.repo.Get(ctx, q.ID)
+}
+
+func (h *{{.Entity}}QueryHandler) HandleListQuery(ctx context.Context, q *List{{.Entity}}Query) ([]{{.Entity}}, error) {
+	return h.repo.List(ctx)
+}
+`
+

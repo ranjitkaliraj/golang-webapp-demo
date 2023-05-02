@@ -1,0 +1,58 @@
+package main
+
+template := `
+package handlers
+
+import (
+	"context"
+
+	"github.com/google/uuid"
+)
+
+type {{.Entity}}CommandHandler struct {
+	repo {{.Entity}}Repository
+}
+
+// Handle all commands. 
+func (h CreateUserCommandHandler) Handle(ctx context.Context, command interface{}) (interface{}, error) {
+    createCmd, isCreateCmd := command.(Create{{.Entity}}Command)
+	if(isCreateCmd) HandleCreateCommand(ctx, createCmd)
+    updateCmd, isUpdateCmd := command.(Update{{.Entity}}Command)
+	if(isUpdateCmd) HandleUpdateCommand(ctx, updateCmd)
+    deleteCmd, isDeleteCmd := command.(Delete{{.Entity}}Command)
+	if(isDeleteCmd) HandleDeleteCommand(ctx, deleteCmd)
+
+	// TODO - template for other custom commands. 
+}
+
+func New{{.Entity}}CommandHandler(repo {{.Entity}}Repository) *{{.Entity}}CommandHandler {
+	return &{{.Entity}}CommandHandler{
+		repo: repo,
+	}
+}
+
+func (h *{{.Entity}}CommandHandler) HandleCreateCommand(ctx context.Context, cmd *Create{{.Entity}}Command) error {
+	entity := &{{.Entity}}{
+		ID: uuid.New(),
+		// Set entity fields from cmd struct
+	}
+
+	return h.repo.Create(ctx, entity)
+}
+
+func (h *{{.Entity}}CommandHandler) HandleUpdateCommand(ctx context.Context, cmd *Update{{.Entity}}Command) error {
+	entity, err := h.repo.Get(ctx, cmd.ID)
+	if err != nil {
+		return err
+	}
+
+	// Update entity fields from cmd struct
+
+	return h.repo.Update(ctx, entity)
+}
+
+func (h *{{.Entity}}CommandHandler) HandleDeleteCommand(ctx context.Context, cmd *Delete{{.Entity}}Command) error {
+	return h.repo.Delete(ctx, cmd.ID)
+}
+
+`

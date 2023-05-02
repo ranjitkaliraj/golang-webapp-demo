@@ -32,13 +32,24 @@ func (a ContactConfig) GetRepositoryConfig() Config.RepositoryConfig {
 // Configuration for Command code generation of Contact.
 func (a ContactConfig) GetCommandConfig() Config.CommandConfig {
 	// Define commands code generation configuration here.
-	return CommandConfig{}
+	return CommandConfig{
+		entity:= "Contact",
+		cmdToEntityMapping := "
+			entity := &{{.Entity}}{
+				ID: cmd.ID,
+				first_name: cmd.Field1,
+				last_name: cmd.Field2
+			}
+		"
+	}
 }
 
 // Configuration for Query code generation of Contact.
 func (a ContactConfig) GetQueryConfig() Config.QueryConfig {
 	// Define query code generation configuration here.
-	return QueryConfig{}
+	return QueryConfig{
+		entity:= "Contact"
+	}
 }
 
 // Configuration for Events code generation of Contact.
